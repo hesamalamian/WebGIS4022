@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="ol.js"></script>
+        <link rel="stylesheet" href="ol.css">
+    </head>
+    <body>
+        <div id="map" class="map" style="height: 400px"></div>
+    <script>
+        var GeoServerMap = new ol.layer.Tile({
+            source: new ol.source.XYZ({
+                url: 'http://localhost:8080/geoserver/kashanmap/gwc/service/wmts?layer=kashanmap:Base Map&style=&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image/png&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}',
+            })
+        })
+        var OSMLayer = new ol.layer.Tile({
+            source: new ol.source.OSM()
+        })
+        var map = new ol.Map({
+            layers: [OSMLayer, GeoServerMap],
+            target : 'map',
+            view : new ol.View({
+                center:[51,32],
+                zoom: 6,
+                projection: 'EPSG:4326'
+            })
+        })
+        var TOC = ol.TOC();
+        map.addControl(TOC)
+    </script>
+    
+    </body>
+</html>
+
